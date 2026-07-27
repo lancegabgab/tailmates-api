@@ -1,11 +1,15 @@
-using TailMates.Data;
+using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
+using TailMates.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+Env.Load();
+
 builder.Services.AddDbContext<TailMatesContext>(options =>
     options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection")
+        Environment.GetEnvironmentVariable("DB_CONNECTION")
+        //builder.Configuration.GetConnectionString("DefaultConnection")
     ));
 
 var app = builder.Build();
