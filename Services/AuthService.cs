@@ -1,0 +1,56 @@
+﻿using Microsoft.AspNetCore.Identity;
+using TailMates.Models;
+using TailMates.Models.Entities;
+using TailMates.Models.Inputs;
+using TailMates.Models.Outputs;
+
+namespace TailMates.Services
+{
+    public class AuthService : IAuthService
+    {
+        private readonly UserManager<User> _userManager;
+
+        public AuthService(UserManager<User> userManager)
+        {
+            _userManager = userManager;
+        }
+
+        public async Task<UserOutput> RegisterAsync(UserInput input)
+        {
+            var user = new User
+            {
+                FirstName = input.FirstName,
+                MiddleName = input.MiddleName,
+                LastName = input.LastName,
+                Email = input.Email,
+                UserName = input.Email,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            var result = await _userManager.CreateAsync(
+                user,
+                input.Password
+            );
+
+            if (!result.Succeeded)
+            {
+                var errors = string.Join(
+                    ", ",
+                    result.Errors.Select(error => error.Description)
+                );
+
+                throw new Exception(errors);
+            }
+
+            return new UserOutput
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                MiddleName = user.MiddleName,
+                LastName = user.LastName,
+                Email = user.Email!,
+                CreatedAt = user.CreatedAt
+            };
+        }
+    }
+}
