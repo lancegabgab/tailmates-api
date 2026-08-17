@@ -1,4 +1,4 @@
-﻿namespace TailMates.Models
+﻿namespace TailMates.Models.Outputs
 {
     public class Response
     {
