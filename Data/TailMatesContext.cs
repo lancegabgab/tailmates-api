@@ -1,13 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using TailMates.Models;
 
 namespace TailMates.Data
 {
-    public class TailMatesContext : DbContext
+    public class TailmatesContext : IdentityDbContext<User>
     {
-        public TailMatesContext(DbContextOptions<TailMatesContext> options)
+        public TailmatesContext(
+            DbContextOptions<TailmatesContext> options)
             : base(options)
         {
         }
 
     }
+
 }
