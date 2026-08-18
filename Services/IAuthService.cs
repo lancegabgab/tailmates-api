@@ -5,6 +5,6 @@ namespace TailMates.Services
 {
     public interface IAuthService
     {
-        Task<UserOutput> RegisterAsync(UserInput input);
+        Task<Response<UserOutput>> RegisterAsync(UserInput input);
     }
 }

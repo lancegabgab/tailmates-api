@@ -15,7 +15,7 @@ namespace TailMates.Services
             _userManager = userManager;
         }
 
-        public async Task<UserOutput> RegisterAsync(UserInput input)
+        public async Task<Response<UserOutput>> RegisterAsync(UserInput input)
         {
             var user = new User
             {
@@ -42,7 +42,7 @@ namespace TailMates.Services
                 throw new Exception(errors);
             }
 
-            return new UserOutput
+            var profile = new UserOutput
             {
                 Id = user.Id,
                 FirstName = user.FirstName,
@@ -50,6 +50,13 @@ namespace TailMates.Services
                 LastName = user.LastName,
                 Email = user.Email!,
                 CreatedAt = user.CreatedAt
+            };
+
+            return new Response<UserOutput>
+            {
+                Success = true,
+                Message = "Registration successful.",
+                Data = profile
             };
         }
     }
