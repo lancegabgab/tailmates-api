@@ -18,9 +18,39 @@ namespace TailMates.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserInput input)
         {
-            var user = await _authService.RegisterAsync(input);
+            try
+            {
+                var response = await _authService.RegisterAsync(input);
 
-            return Ok(user);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = ex.Message
+                });
+            }
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(LoginInput input)
+        {
+            try
+            {
+                var response = await _authService.LoginAsync(input);
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = ex.Message
+                });
+            }
         }
     }
 }

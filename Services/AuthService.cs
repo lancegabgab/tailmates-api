@@ -59,5 +59,42 @@ namespace TailMates.Services
                 Data = profile
             };
         }
+
+        public async Task<Response<UserOutput>> LoginAsync(LoginInput input)
+        {
+            var user = await _userManager.FindByEmailAsync(input.Email);
+
+            if (user == null)
+            {
+                throw new Exception("Invalid email or password.");
+            }
+
+            var passwordValid = await _userManager.CheckPasswordAsync(
+                user,
+                input.Password
+            );
+
+            if (!passwordValid)
+            {
+                throw new Exception("Invalid email or password.");
+            }
+
+            var profile = new UserOutput
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                MiddleName = user.MiddleName,
+                LastName = user.LastName,
+                Email = user.Email!,
+                CreatedAt = user.CreatedAt
+            };
+
+            return new Response<UserOutput>
+            {
+                Success = true,
+                Message = "Login successful.",
+                Data = profile
+            };
+        }
     }
 }
