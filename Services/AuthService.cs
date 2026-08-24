@@ -17,7 +17,12 @@ namespace TailMates.Services
 
         public async Task<Response<UserOutput>> RegisterAsync(UserInput input)
         {
-            var user = new User
+			if (input.Password != input.ConfirmPassword)
+			{
+				throw new Exception("Passwords do not match.");
+			}
+
+			var user = new User
             {
                 FirstName = input.FirstName,
                 MiddleName = input.MiddleName,
