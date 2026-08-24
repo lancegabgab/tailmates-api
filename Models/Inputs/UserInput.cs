@@ -22,5 +22,8 @@ namespace TailMates.Models.Inputs
         [Required]
         [MinLength(8)]
         public string Password { get; set; } = string.Empty;
-    }
+
+		[Compare(nameof(Password), ErrorMessage = "Passwords do not match.")]
+		public string ConfirmPassword { get; set; } = string.Empty;
+	}
 }
