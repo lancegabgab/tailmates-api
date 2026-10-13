@@ -6,7 +6,7 @@ using TailMates.Models.Outputs;
 
 namespace TailMates.Services
 {
-    public class AuthService : IAuthService
+    public class AuthService 
     {
         private readonly UserManager<User> _userManager;
 

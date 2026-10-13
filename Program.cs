@@ -18,7 +18,7 @@ builder.Services
     .AddIdentityCore<User>()
     .AddEntityFrameworkStores<TailmatesContext>();
 
-builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<AuthService>();
 
 builder.Services.AddControllers();
 
