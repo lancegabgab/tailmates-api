@@ -20,11 +20,27 @@ builder.Services
 
 builder.Services.AddScoped<AuthService>();
 
+builder.Services.AddCors(options =>
+{
+	options.AddPolicy("AngularPolicy", policy =>
+	{
+		policy
+			.WithOrigins(
+				"http://localhost:4200",
+				"https://tailmates-kappa.vercel.app"
+			)
+			.AllowAnyHeader()
+			.AllowAnyMethod();
+	});
+});
+
 builder.Services.AddControllers();
 
 var app = builder.Build();
 
 app.UseHttpsRedirection();
+
+app.UseCors("AngularPolicy");
 
 app.MapControllers();
 
